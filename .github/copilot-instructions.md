@@ -161,6 +161,9 @@ git --version && ansible-playbook --version && docker --version
 ### Future Build Commands (When Added)
 
 ```bash
+# Expected Go CLI build
+go build -o bin/kamae ./cmd/kamae            # Build the kamae CLI
+go run ./cmd/kamae init                      # Run initialization (if applicable)
 # Expected Ansible usage
 ansible-playbook -i inventory bootstrap.yml  # NEVER CANCEL: 15-45 minutes
 
