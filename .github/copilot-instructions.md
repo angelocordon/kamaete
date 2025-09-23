@@ -48,14 +48,21 @@ The development environment provides these validated tools:
 
 ## Build and Test Instructions
 
-### Current State (No Build Required)
+### Building the Go CLI Application
 
-Since this is currently a minimal repository with only documentation:
+The repository contains a Go CLI application located in `./cmd/kamae`. To build the application, ensure you have Go installed (version 1.20 or higher recommended).
 
-- **No build process exists yet** - The repository contains only README.md
-- **No test suite exists yet** - Tests will be added as functionality grows
-- **No dependencies to install** - Future versions may include package.json, requirements.txt, etc.
+- Build the CLI: `go build -o bin/kamae ./cmd/kamae`
+- Run the CLI: `./bin/kamae [command]`
 
+### Dependencies
+
+- **Go toolchain**: Required to build and run the application. Install from https://golang.org/dl/
+- Additional dependencies are managed via Go modules (`go.mod` and `go.sum`).
+
+### Testing
+
+- Run tests: `go test ./...`
 ## Validation and Testing
 
 ### Current Validation (Minimal Repository)
