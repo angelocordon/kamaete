@@ -70,6 +70,17 @@ The repository contains a Go CLI application located in `./cmd/kamae`. To build 
 - Verify git operations work: `git --no-pager log --oneline -5`
 - Confirm directory structure: `find . -type f ! -path './.git/*'`
 
+### Go CLI Validation (If Implemented)
+
+If the Go CLI tool (`bin/kamae`) exists, validate it with the following commands:
+
+- Ensure the CLI is executable: `ls -l bin/kamae`
+- Check the CLI version/help: `bin/kamae --help`
+- Test initialization: `bin/kamae init`
+- (If applicable) Run the build process: `go build -o bin/kamae ./cmd/kamae`
+- (If applicable) Run CLI tests: `go test ./...`
+
+If the CLI is not yet implemented, skip these steps. Update this section as soon as Go CLI functionality is added.
 ### Future Validation Scenarios
 
 When functionality is added, ALWAYS test these scenarios after making changes:
