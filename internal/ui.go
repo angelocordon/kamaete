@@ -47,7 +47,6 @@ func (m Model) Selected(index int) bool {
 	return m.selected[index]
 }
 
-
 func InitialModel(apps []AppItem) Model {
 	selected := make(map[int]bool)
 	// Pre-select recommended apps
@@ -120,11 +119,11 @@ func (m Model) View() string {
 	}
 
 	currentIndex := 0
-	
+
 	// Render recommended apps first
 	b.WriteString(categoryStyle.Render("RECOMMENDED APPLICATIONS"))
 	b.WriteString("\n")
-	
+
 	for category, apps := range categories {
 		hasRecommended := false
 		for _, app := range apps {
@@ -133,7 +132,7 @@ func (m Model) View() string {
 				break
 			}
 		}
-		
+
 		if hasRecommended {
 			b.WriteString(fmt.Sprintf("\n  %s:\n", strings.Title(category)))
 			for i, app := range m.apps {
@@ -154,7 +153,7 @@ func (m Model) View() string {
 					}
 
 					line := fmt.Sprintf("%s [%s] %s", cursor, checked, app.DisplayName)
-					b.WriteString(style.Render("    " + line) + "\n")
+					b.WriteString(style.Render("    "+line) + "\n")
 					currentIndex++
 				}
 			}
@@ -164,7 +163,7 @@ func (m Model) View() string {
 	// Render optional apps
 	b.WriteString(categoryStyle.Render("\nOPTIONAL APPLICATIONS"))
 	b.WriteString("\n")
-	
+
 	for category, apps := range categories {
 		hasOptional := false
 		for _, app := range apps {
@@ -173,7 +172,7 @@ func (m Model) View() string {
 				break
 			}
 		}
-		
+
 		if hasOptional {
 			b.WriteString(fmt.Sprintf("\n  %s:\n", strings.Title(category)))
 			for i, app := range m.apps {
@@ -194,7 +193,7 @@ func (m Model) View() string {
 					}
 
 					line := fmt.Sprintf("%s [%s] %s", cursor, checked, app.DisplayName)
-					b.WriteString(style.Render("    " + line) + "\n")
+					b.WriteString(style.Render("    "+line) + "\n")
 					currentIndex++
 				}
 			}

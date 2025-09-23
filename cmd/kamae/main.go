@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/angelocordon/kamaete/internal"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 func main() {
@@ -50,7 +50,7 @@ func main() {
 
 func handleInstallation(model internal.Model, allApps []internal.AppItem) {
 	var selectedApps []internal.AppItem
-	
+
 	// Collect selected apps
 	for i, app := range allApps {
 		if model.Selected(i) {
@@ -64,7 +64,7 @@ func handleInstallation(model internal.Model, allApps []internal.AppItem) {
 	}
 
 	fmt.Printf("\n--- Installing the following applications (stub):\n\n")
-	
+
 	// Group by installation method for better output
 	brewApps := []string{}
 	brewCaskApps := []string{}
@@ -83,15 +83,15 @@ func handleInstallation(model internal.Model, allApps []internal.AppItem) {
 	}
 
 	fmt.Println("\n--- Installation Summary (stub) ---")
-	
+
 	if len(brewApps) > 0 {
 		fmt.Printf("Homebrew packages: brew install %s\n", strings.Join(brewApps, " "))
 	}
-	
+
 	if len(brewCaskApps) > 0 {
 		fmt.Printf("Homebrew casks: brew install --cask %s\n", strings.Join(brewCaskApps, " "))
 	}
-	
+
 	if len(masApps) > 0 {
 		fmt.Printf("Mac App Store apps: %s\n", strings.Join(masApps, ", "))
 	}
