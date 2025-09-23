@@ -34,10 +34,29 @@ Clone the repository and build the CLI:
 ```bash
 git clone https://github.com/angelocordon/kamaete.git
 cd kamaete
-go build -o bin/kamae ./cmd/kamae
+make setup  # Download dependencies and setup development environment
+make build  # Build the binary
 ```
 
 The binary will be created at `./bin/kamae`.
+
+### Development Commands
+
+The project includes a Makefile to streamline common development tasks:
+
+- `make setup` - Download Go modules and prepare development environment
+- `make build` - Compile the kamae binary
+- `make test` - Run all Go tests
+- `make lint` - Run linters (go vet + fmt check, or golangci-lint if installed)
+- `make format` - Format Go source files with gofmt
+- `make clean` - Remove build artifacts
+- `make help` - Show all available targets
+
+Alternatively, you can build directly with Go:
+
+```bash
+go build -o bin/kamae ./cmd/kamae
+```
 
 ## Usage
 
