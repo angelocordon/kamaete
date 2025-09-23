@@ -91,17 +91,17 @@ func GetDefaultManifestPath() string {
 	execPath, err := os.Executable()
 	if err == nil {
 		// Try relative to executable
-		manifestPath := filepath.Join(filepath.Dir(execPath), "..", "modules", "apps.yaml")
+		manifestPath := filepath.Join(filepath.Dir(execPath), "..", "modules", "manifest.yaml")
 		if _, err := os.Stat(manifestPath); err == nil {
 			return manifestPath
 		}
 	}
 
 	// Try current working directory structure
-	if _, err := os.Stat("modules/apps.yaml"); err == nil {
-		return "modules/apps.yaml"
+	if _, err := os.Stat("modules/manifest.yaml"); err == nil {
+		return "modules/manifest.yaml"
 	}
 
 	// Default fallback
-	return "modules/apps.yaml"
+	return "modules/manifest.yaml"
 }

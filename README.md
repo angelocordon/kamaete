@@ -86,7 +86,7 @@ Selected: 14 applications
 
 ## Application Manifest
 
-Applications are defined in `modules/apps.yaml` using the following structure:
+Applications are defined in `modules/manifest.yaml` using the following structure:
 
 ```yaml
 recommended:
@@ -118,7 +118,7 @@ kamaete/
 ├── internal/
 │   ├── manifest.go           # Manifest loading logic
 │   └── ui.go                 # Interactive UI implementation
-├── modules/apps.yaml         # Application manifest
+├── modules/manifest.yaml      # Application manifest
 ├── bin/                      # Build output directory
 ├── go.mod                    # Go module definition
 └── README.md                 # This file
