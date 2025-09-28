@@ -10,7 +10,16 @@ echo "ctrl + c to exit."
 echo
 
 while true; do
-  read -r -p "Enter your choice [1-3]: " choice
+  if ! read -r -p "Enter your choice [1-3]: " choice; then
+    echo ""
+    echo "This script requires interactive input."
+    echo "Please run it directly instead of piping from curl:"
+    echo ""
+    echo "  curl -o bootstrap.sh https://raw.githubusercontent.com/angelocordon/kamaete/main/bootstrap.sh"
+    echo "  chmod +x bootstrap.sh"
+    echo "  ./bootstrap.sh"
+    exit 1
+  fi
   case $choice in
     1)
       echo -e "\n--- Installing applications & tools ---"
