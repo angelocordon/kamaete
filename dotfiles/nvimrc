@@ -1,0 +1,81 @@
+" Kamaete - Neovim/Vim Configuration
+" This file is managed by Kamaete dotfiles system
+
+" General Settings
+set nocompatible              " Disable vi compatibility
+filetype plugin indent on     " Enable file type detection
+syntax enable                 " Enable syntax highlighting
+
+" UI Configuration
+set number                    " Show line numbers
+set relativenumber            " Show relative line numbers
+set cursorline                " Highlight current line
+set showcmd                   " Show command in bottom bar
+set wildmenu                  " Visual autocomplete for command menu
+set showmatch                 " Highlight matching brackets
+set laststatus=2              " Always show status line
+
+" Search Settings
+set incsearch                 " Search as characters are entered
+set hlsearch                  " Highlight search matches
+set ignorecase                " Ignore case when searching
+set smartcase                 " Override ignorecase if search contains uppercase
+
+" Indentation
+set tabstop=4                 " Number of visual spaces per TAB
+set softtabstop=4             " Number of spaces in tab when editing
+set shiftwidth=4              " Number of spaces for autoindent
+set expandtab                 " Tabs are spaces
+set autoindent                " Auto-indent new lines
+set smartindent               " Smart indent
+
+" Performance
+set lazyredraw                " Don't redraw while executing macros
+set ttyfast                   " Faster redrawing
+
+" Backups
+set nobackup                  " Don't create backup files
+set nowritebackup             " Don't create backup before writing
+set noswapfile                " Don't use swap files
+
+" Clipboard
+set clipboard=unnamed         " Use system clipboard
+
+" Split behavior
+set splitbelow                " Horizontal splits open below
+set splitright                " Vertical splits open to the right
+
+" Colors
+set background=dark           " Dark background
+set t_Co=256                  " 256 color support
+
+" Key Mappings
+let mapleader = " "           " Set leader key to space
+
+" Quick save
+nnoremap <leader>w :w<CR>
+
+" Quick quit
+nnoremap <leader>q :q<CR>
+
+" Clear search highlighting
+nnoremap <leader><space> :nohlsearch<CR>
+
+" Navigate splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" File type specific settings
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
+autocmd FileType javascript,typescript,json,yaml,html,css setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd FileType go setlocal tabstop=4 shiftwidth=4 noexpandtab
+
+" Auto-remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
+
+" Load local customizations if they exist
+if filereadable(glob("~/.nvimrc.local"))
+    source ~/.nvimrc.local
+endif
