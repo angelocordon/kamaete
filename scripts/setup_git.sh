@@ -38,7 +38,7 @@ echo ""
 
 # Configure user.name
 echo -e "${YELLOW}Configuring git user.name...${NC}"
-if git config --global user.name | grep -q "Angelo Cordon"; then
+if git config --global user.name 2>/dev/null | grep -q "Angelo Cordon"; then
     echo -e "${GREEN}✓ user.name is already set to 'Angelo Cordon'${NC}"
 else
     git config --global user.name "Angelo Cordon"
@@ -47,7 +47,7 @@ fi
 
 # Configure user.email
 echo -e "${YELLOW}Configuring git user.email...${NC}"
-if git config --global user.email | grep -q "angelocordon@gmail.com"; then
+if git config --global user.email 2>/dev/null | grep -q "angelocordon@gmail.com"; then
     echo -e "${GREEN}✓ user.email is already set to 'angelocordon@gmail.com'${NC}"
 else
     git config --global user.email "angelocordon@gmail.com"
@@ -56,7 +56,7 @@ fi
 
 # Configure init.defaultBranch
 echo -e "${YELLOW}Configuring git init.defaultBranch...${NC}"
-if git config --global init.defaultBranch | grep -q "main"; then
+if git config --global init.defaultBranch 2>/dev/null | grep -q "main"; then
     echo -e "${GREEN}✓ init.defaultBranch is already set to 'main'${NC}"
 else
     git config --global init.defaultBranch "main"
@@ -67,6 +67,6 @@ echo ""
 echo -e "${GREEN}=== Git Configuration Complete ===${NC}"
 echo ""
 echo "Current git configuration:"
-echo -e "${YELLOW}  user.name:${NC} $(git config --global user.name)"
-echo -e "${YELLOW}  user.email:${NC} $(git config --global user.email)"
-echo -e "${YELLOW}  init.defaultBranch:${NC} $(git config --global init.defaultBranch)"
+echo -e "${YELLOW}  user.name:${NC} $(git config --global user.name 2>/dev/null || echo '(not set)')"
+echo -e "${YELLOW}  user.email:${NC} $(git config --global user.email 2>/dev/null || echo '(not set)')"
+echo -e "${YELLOW}  init.defaultBranch:${NC} $(git config --global init.defaultBranch 2>/dev/null || echo '(not set)')"
