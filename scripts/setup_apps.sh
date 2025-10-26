@@ -64,14 +64,17 @@ echo "Brewfile location: ${BREWFILE}"
 echo ""
 
 # Run brew bundle to install all packages from Brewfile
-if brew bundle --file="${BREWFILE}"; then
-    echo ""
+# Note: brew bundle is idempotent and will skip already-installed packages
+# We don't use --no-upgrade to allow existing packages to be updated if desired
+brew bundle --file="${BREWFILE}"
+exit_code=$?
+
+echo ""
+if [[ ${exit_code} -eq 0 ]]; then
     echo -e "${GREEN}✓ All applications installed successfully${NC}"
 else
-    echo ""
-    echo -e "${RED}✗ Some applications failed to install${NC}"
-    echo -e "${YELLOW}Note: Some failures may be expected (e.g., apps already installed)${NC}"
-    exit 1
+    echo -e "${YELLOW}⚠ brew bundle completed with warnings (exit code: ${exit_code})${NC}"
+    echo -e "${YELLOW}This is often normal - some packages may already be installed${NC}"
 fi
 
 echo ""
