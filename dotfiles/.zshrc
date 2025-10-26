@@ -17,32 +17,12 @@ setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 
-# Aliases
-alias ll='ls -lah'
-alias la='ls -A'
-alias l='ls -CF'
-alias ..='cd ..'
-alias ...='cd ../..'
-
-# Git Aliases
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git log --oneline --graph --decorate'
-alias gd='git diff'
-
-# Vim/Neovim Aliases
-alias vim='nvim'
-alias vi='nvim'
-
-# Development Aliases
-alias dc='docker-compose'
-alias dps='docker ps'
-
 # Enable color support
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+
+# Load aliases
+[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
 
 # Load additional configurations if they exist
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

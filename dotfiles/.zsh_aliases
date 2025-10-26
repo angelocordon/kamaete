@@ -1,0 +1,25 @@
+# Kamaete - Zsh Aliases
+# This file is managed by Kamaete dotfiles system
+
+# General Aliases
+alias ll='ls -lah'
+alias la='ls -A'
+alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# Git Aliases
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate'
+alias gd='git diff'
+
+# Vim/Neovim Aliases
+alias vim='nvim'
+alias vi='nvim'
+
+# Development Aliases
+alias dc='docker-compose'
+alias dps='docker ps'
