@@ -47,9 +47,20 @@ trap 'error_handler ${LINENO}' ERR
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Determine if we need to clone the repository
-# If the scripts directory doesn't exist, we're being run via curl and need to clone
-if [ ! -d "${SCRIPT_DIR}/scripts" ]; then
+# Check for .git directory - more robust than checking for scripts directory
+if [ ! -d "${SCRIPT_DIR}/.git" ] || [ ! -d "${SCRIPT_DIR}/scripts" ]; then
     echo -e "${YELLOW}Repository not found locally. Cloning from GitHub...${NC}"
+    echo ""
+    
+    # Verify git is available
+    if ! command -v git &> /dev/null; then
+        echo -e "${RED}✗ Git is not installed${NC}"
+        echo -e "${YELLOW}On macOS, you can install git using:${NC}"
+        echo "  xcode-select --install"
+        echo ""
+        echo "After installing git, run this script again."
+        exit 1
+    fi
     
     # Clone into ~/kamaete
     CLONE_DIR="${HOME}/kamaete"
@@ -59,10 +70,18 @@ if [ ! -d "${SCRIPT_DIR}/scripts" ]; then
         echo -e "${YELLOW}Found existing kamaete directory at ${CLONE_DIR}${NC}"
         echo -e "${YELLOW}Updating repository...${NC}"
         cd "${CLONE_DIR}"
-        git pull origin main || {
+        
+        # Try to update, fail if it doesn't work
+        if ! git pull origin main; then
+            echo ""
             echo -e "${RED}✗ Failed to update repository${NC}"
-            echo -e "${YELLOW}You may want to manually update: cd ${CLONE_DIR} && git pull${NC}"
-        }
+            echo -e "${YELLOW}Please manually update and try again:${NC}"
+            echo "  cd ${CLONE_DIR}"
+            echo "  git pull origin main"
+            exit 1
+        fi
+        
+        echo -e "${GREEN}✓ Repository updated successfully${NC}"
     else
         echo -e "${GREEN}Cloning kamaete to ${CLONE_DIR}...${NC}"
         git clone https://github.com/angelocordon/kamaete.git "${CLONE_DIR}"
