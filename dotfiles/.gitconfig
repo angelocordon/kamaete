@@ -3,8 +3,8 @@
 
 [user]
 	# Note: Update these with your personal information
-	name = Your Name
-	email = your.email@example.com
+	name = Angelo Cordon
+	email = angelocordon@gmail.com
 
 [core]
 	editor = nvim

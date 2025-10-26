@@ -10,7 +10,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Dotfiles to symlink
-DOTFILES=(".zshrc" ".zsh_aliases" ".gitconfig" "nvimrc")
+DOTFILES=(".zshrc" ".zsh_aliases" ".gitconfig")
 
 echo "========================================"
 echo "  Kamaete Dotfiles Setup"
