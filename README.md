@@ -27,9 +27,11 @@ Run the following command to set up your machine:
 curl -sSL https://raw.githubusercontent.com/angelocordon/kamaete/main/install.sh | bash
 ```
 
+> **Security Note:** Piping to bash runs the script immediately. For security-conscious users, we recommend the manual installation method below to review the code first.
+
 ### Manual Installation
 
-If you prefer to review the code before running:
+If you prefer to review the code before running (recommended for first-time use):
 
 ```bash
 git clone https://github.com/angelocordon/kamaete.git
