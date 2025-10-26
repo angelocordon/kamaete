@@ -109,20 +109,23 @@ The installation is idempotent, so you can run it multiple times safely. Each ru
 
 **Developer Tools:**
 - git, docker, gh (GitHub CLI)
-- node, python, go (language runtimes)
 
 **Productivity Apps:**
-- Visual Studio Code
+- Visual Studio Code (code editor)
 - Ghostty (modern terminal emulator)
 - Rectangle (window management)
 - Raycast (productivity launcher)
 - Bartender (menu bar organization)
+- Amphetamine (keep your Mac awake)
+- Notion Calendar (calendar management)
 
 **Communication:**
 - Slack, Discord, Zoom
 
 **Utilities:**
 - 1Password (password management)
+- Google Chrome (web browser)
+- Spotify (music streaming)
 
 ## 🔧 How to Extend the System
 
