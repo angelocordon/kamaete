@@ -95,6 +95,7 @@ The installation is idempotent, so you can run it multiple times safely. Each ru
 | `install.sh` | Main installation script that orchestrates all setup steps |
 | `scripts/setup_apps.sh` | Installs applications using Homebrew and Brewfile |
 | `scripts/setup-dotfiles.sh` | Creates symlinks for dotfiles with backup mechanism |
+| `scripts/setup_git.sh` | Configures git with user details and default branch (main) |
 | `scripts/setup_dirs.sh` | Creates standard development directory structure (~/Development) |
 
 ### Dotfiles
