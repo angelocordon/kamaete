@@ -96,6 +96,7 @@ The installation is idempotent, so you can run it multiple times safely. Each ru
 | `scripts/setup-apps.sh` | Installs applications using Homebrew and Brewfile |
 | `scripts/setup-dotfiles.sh` | Creates symlinks for dotfiles with backup mechanism |
 | `scripts/setup-directories.sh` | Creates standard development directory structure |
+| `scripts/setup_git.sh` | Configures git with user details and default branch (main) |
 
 ### Dotfiles
 
