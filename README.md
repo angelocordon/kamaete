@@ -108,7 +108,8 @@ The installation is idempotent, so you can run it multiple times safely. Each ru
 ### Applications Included
 
 **Developer Tools:**
-- git, docker, gh (GitHub CLI)
+- git, gh (GitHub CLI)
+- Docker Desktop (containerization platform)
 
 **Productivity Apps:**
 - Visual Studio Code (code editor)

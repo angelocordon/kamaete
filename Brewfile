@@ -11,9 +11,9 @@ tap "homebrew/bundle"
 # CLI Tools
 brew "git"
 brew "gh"
-brew "docker"
 
 # GUI Applications (Casks)
+cask "docker"
 cask "ghostty"
 cask "visual-studio-code"
 cask "zoom"
