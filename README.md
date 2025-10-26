@@ -8,7 +8,7 @@ Kamaete is a system to easily bootstrap a new laptop for my everyday productivit
 
 **Goal:** Reproducible developer machine setup for macOS
 
-Kamaete enables rapid onboarding of new machines or recovery from system reinstalls with a single command. Whether you're setting up a new MacBook or rebuilding after a clean install, Kamaete ensures your development environment is configured consistently and efficiently.
+Kamaete enables rapid onboarding of new machines or recovery from system reinstalls with a single command. Whether I'm setting up a new MacBook or rebuilding after a clean install, Kamaete ensures my development environment is configured consistently and efficiently.
 
 **Key Benefits:**
 - **Automated:** Minimal user intervention required
