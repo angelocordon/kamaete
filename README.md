@@ -2,7 +2,7 @@
 
 > _"To prepare" or "get ready" in Japanese_
 
-Kamaete is a macOS developer machine bootstrapping and dotfiles management system. It provides an automated, idempotent setup that can quickly configure a new macOS machine with all essential tools, applications, and personalized configurations for development work.
+Kamaete is a system to easily bootstrap a new laptop for my everyday productivity and dotfiles management system. It provides an automated, idempotent setup that can quickly configure a new macOS machine with all of my essential tools, applications, and personalized configurations for development work.
 
 ## 🎯 Project Overview
 
