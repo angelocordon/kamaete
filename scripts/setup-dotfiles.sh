@@ -22,9 +22,9 @@ echo ""
 
 # Function to symlink a dotfile
 symlink_dotfile() {
-    local file="$1"
-    local src="$REPO_ROOT/dotfiles/$file"
-    local dest="$HOME/$file"
+    local dotfile_name="$1"
+    local src="$REPO_ROOT/dotfiles/$dotfile_name"
+    local dest="$HOME/$dotfile_name"
     
     # Check if source file exists
     if [ ! -f "$src" ]; then
@@ -38,7 +38,7 @@ symlink_dotfile() {
         local current_target
         current_target="$(readlink "$dest")"
         if [ "$current_target" = "$src" ]; then
-            echo "✓ $file already symlinked correctly. Skipping."
+            echo "✓ $dotfile_name already symlinked correctly. Skipping."
         else
             echo "⚠️  $dest is a symlink but points to: $current_target"
             echo "   Expected: $src"
@@ -47,21 +47,21 @@ symlink_dotfile() {
     # Check if destination exists as a regular file
     elif [ -e "$dest" ]; then
         local backup_path
-        backup_path="$dest.backup-$(date +%s)"
+        backup_path="$dest.backup-$(date +%Y%m%d_%H%M%S)"
         mv "$dest" "$backup_path"
         ln -s "$src" "$dest"
         echo "✓ Backed up existing file to: $backup_path"
-        echo "✓ Symlinked $file"
+        echo "✓ Symlinked $dotfile_name"
     # Destination doesn't exist, create symlink
     else
         ln -s "$src" "$dest"
-        echo "✓ Symlinked $file"
+        echo "✓ Symlinked $dotfile_name"
     fi
 }
 
 # Process each dotfile
-for file in "${DOTFILES[@]}"; do
-    symlink_dotfile "$file"
+for dotfile_name in "${DOTFILES[@]}"; do
+    symlink_dotfile "$dotfile_name"
 done
 
 echo ""
@@ -75,4 +75,3 @@ echo ""
 echo "To customize further, you can:"
 echo "  - Edit files in: $REPO_ROOT/dotfiles/"
 echo "  - Create local overrides (e.g., ~/.zshrc.local, ~/.nvimrc.local)"
-echo ""
