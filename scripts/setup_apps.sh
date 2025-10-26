@@ -66,8 +66,11 @@ echo ""
 # Run brew bundle to install all packages from Brewfile
 # Note: brew bundle is idempotent and will skip already-installed packages
 # We don't use --no-upgrade to allow existing packages to be updated if desired
+# Temporarily disable exit on error to handle brew bundle exit codes gracefully
+set +e
 brew bundle --file="${BREWFILE}"
 exit_code=$?
+set -e
 
 echo ""
 if [[ ${exit_code} -eq 0 ]]; then
