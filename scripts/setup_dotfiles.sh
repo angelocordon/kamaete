@@ -35,7 +35,8 @@ symlink_dotfile() {
     # Check if destination is already a symlink
     if [ -L "$dest" ]; then
         # Check if it points to the correct location
-        local current_target="$(readlink "$dest")"
+        local current_target
+        current_target="$(readlink "$dest")"
         if [ "$current_target" = "$src" ]; then
             echo "✓ $file already symlinked correctly. Skipping."
         else
@@ -45,7 +46,8 @@ symlink_dotfile() {
         fi
     # Check if destination exists as a regular file
     elif [ -e "$dest" ]; then
-        local backup_path="$dest.backup-$(date +%s)"
+        local backup_path
+        backup_path="$dest.backup-$(date +%s)"
         mv "$dest" "$backup_path"
         ln -s "$src" "$dest"
         echo "✓ Backed up existing file to: $backup_path"
