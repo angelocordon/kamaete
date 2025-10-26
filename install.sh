@@ -24,10 +24,6 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 NC='\033[0m' # No Color
 
-# Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="${SCRIPT_DIR}"
-
 # Error handler function
 error_handler() {
     local line_no=$1
@@ -46,6 +42,38 @@ error_handler() {
 
 # Set up error trap
 trap 'error_handler ${LINENO}' ERR
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Determine if we need to clone the repository
+# If the scripts directory doesn't exist, we're being run via curl and need to clone
+if [ ! -d "${SCRIPT_DIR}/scripts" ]; then
+    echo -e "${YELLOW}Repository not found locally. Cloning from GitHub...${NC}"
+    
+    # Clone into ~/kamaete
+    CLONE_DIR="${HOME}/kamaete"
+    
+    # Check if directory already exists
+    if [ -d "${CLONE_DIR}" ]; then
+        echo -e "${YELLOW}Found existing kamaete directory at ${CLONE_DIR}${NC}"
+        echo -e "${YELLOW}Updating repository...${NC}"
+        cd "${CLONE_DIR}"
+        git pull origin main || {
+            echo -e "${RED}✗ Failed to update repository${NC}"
+            echo -e "${YELLOW}You may want to manually update: cd ${CLONE_DIR} && git pull${NC}"
+        }
+    else
+        echo -e "${GREEN}Cloning kamaete to ${CLONE_DIR}...${NC}"
+        git clone https://github.com/angelocordon/kamaete.git "${CLONE_DIR}"
+        echo -e "${GREEN}✓ Repository cloned successfully${NC}"
+    fi
+    
+    REPO_ROOT="${CLONE_DIR}"
+    cd "${REPO_ROOT}"
+else
+    REPO_ROOT="${SCRIPT_DIR}"
+fi
 
 # Print welcome banner
 echo ""
