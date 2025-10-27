@@ -13,17 +13,21 @@ brew "git"
 brew "gh"
 
 # GUI Applications (Casks)
-cask "docker"
-cask "ghostty"
-cask "visual-studio-code"
-cask "zoom"
-cask "notion-calendar"
-cask "spotify"
-cask "slack"
-cask "discord"
-cask "1password"
-cask "google-chrome"
+
+cask "ghostty" # TODO: Move as a setup script 
+cask "visual-studio-code" # TODO: Move as a setup script
+
 cask "amphetamine"
 cask "rectangle"
 cask "raycast"
 cask "bartender"
+
+# cask "docker" TODO: failed to install
+# cask "spotify"
+# cask "slack"
+# cask "discord"
+# cask "1password"
+# cask "google-chrome"
+# cask "zoom" 
+# cask "notion-calendar"
+
