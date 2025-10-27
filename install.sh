@@ -8,8 +8,17 @@
 # - Automated: Minimal user intervention required
 # - Clear: Provides helpful output and error messages
 #
+# To solve the non-interactive TTY issue with Homebrew installation when running
+# via curl | bash, this script clones the repository first, then executes
+# setup_homebrew.sh as a local script (which has proper TTY access).
+#
 # Usage:
 #   curl -sSL https://raw.githubusercontent.com/angelocordon/kamaete/main/install.sh | bash
+#
+# Or for manual installation:
+#   git clone https://github.com/angelocordon/kamaete.git
+#   cd kamaete
+#   ./install.sh
 
 set -euo pipefail
 
@@ -78,38 +87,17 @@ else
 fi
 echo ""
 
-# Step 3: Install Homebrew (package manager needed for all other tools)
-echo -e "${BLUE}${BOLD}Checking Homebrew...${NC}"
-if ! command -v brew &> /dev/null; then
-    echo -e "${YELLOW}Homebrew not found. Installing...${NC}"
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    
-    # Add Homebrew to PATH for current session (Apple Silicon)
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-    echo -e "${GREEN}✓ Homebrew installed${NC}"
-else
-    echo -e "${GREEN}✓ Homebrew already installed${NC}"
-fi
-echo ""
-
-# Step 4: Ensure git is available (needed to clone the kamaete repository)
+# Step 3: Verify git is available (installed with Xcode Command Line Tools)
 echo -e "${BLUE}${BOLD}Checking git...${NC}"
 if ! command -v git &> /dev/null; then
-    echo -e "${YELLOW}Git not found. Installing via Homebrew...${NC}"
-    brew install git
-    echo -e "${GREEN}✓ Git installed${NC}"
-    
-    # Configure git with basic settings (required for cloning operations)
-    echo -e "${YELLOW}Configuring git...${NC}"
-    git config --global user.name "Angelo Cordon"
-    git config --global user.email "angelocordon@gmail.com"
-    echo -e "${GREEN}✓ Git configured${NC}"
-else
-    echo -e "${GREEN}✓ Git already installed${NC}"
+    echo -e "${RED}✗ Git is not available. Xcode Command Line Tools may not be properly installed.${NC}"
+    echo -e "${YELLOW}Please run: xcode-select --install${NC}"
+    exit 1
 fi
+echo -e "${GREEN}✓ Git is available${NC}"
 echo ""
 
-# Step 5: Clone or update kamaete repository in ~/Development
+# Step 4: Clone or update kamaete repository in ~/Development
 KAMAETE_DIR="${DEV_DIR}/kamaete"
 echo -e "${BLUE}${BOLD}Checking kamaete repository...${NC}"
 if [ -d "${KAMAETE_DIR}" ]; then
@@ -128,6 +116,35 @@ echo ""
 REPO_ROOT="${KAMAETE_DIR}"
 echo -e "${YELLOW}Repository location:${NC} ${REPO_ROOT}"
 echo ""
+
+# Step 5: Install Homebrew by executing setup_homebrew.sh from the cloned repository
+# Running it from the cloned repo ensures proper TTY access for interactive sudo prompts
+# This solves the non-interactive mode issue when install.sh is run via curl | bash
+echo -e "${BLUE}${BOLD}Installing Homebrew from cloned repository...${NC}"
+echo -e "${YELLOW}Running setup_homebrew.sh with proper TTY access...${NC}"
+echo ""
+
+SETUP_HOMEBREW="${REPO_ROOT}/scripts/setup_homebrew.sh"
+# The selected line attempts to execute the setup_homebrew.sh 
+# script using bash. If this script fails (i.e., returns a non-
+# zero exit code), the script will handle the error in the 
+# following lines. This ensures Homebrew installation only 
+# continues if setup_homebrew.sh completes successfully.
+if [ ! -f "${SETUP_HOMEBREW}" ]; then
+    echo -e "${RED}✗ setup_homebrew.sh not found at ${SETUP_HOMEBREW}${NC}"
+    echo -e "${YELLOW}Your repository may be out of date. Try: cd ${REPO_ROOT} && git pull${NC}"
+    exit 1
+fi
+
+# Execute the Homebrew setup script
+if ! bash "${SETUP_HOMEBREW}"; then
+    echo -e "${RED}✗ Homebrew installation failed${NC}"
+    echo -e "${YELLOW}You can try running the setup manually:${NC}"
+    echo "  cd ${REPO_ROOT}"
+    echo "  ./scripts/setup_homebrew.sh"
+    echo ""
+    exit 1
+fi
 
 # Helper function to run setup scripts with clear progress feedback
 run_setup_script() {
@@ -183,3 +200,4 @@ echo "  2. Customize dotfiles in: ${REPO_ROOT}/dotfiles/"
 echo ""
 echo -e "${BLUE}Happy coding! 🚀${NC}"
 echo ""
+
