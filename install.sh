@@ -9,9 +9,6 @@
 # - Clear: Provides helpful output and error messages
 #
 # Usage:
-#   ./install.sh
-# 
-# Or remotely:
 #   curl -sSL https://raw.githubusercontent.com/angelocordon/kamaete/main/install.sh | bash
 
 set -euo pipefail
@@ -24,7 +21,7 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 NC='\033[0m' # No Color
 
-# Error handler function
+# Trap errors to provide helpful context about what failed and why it matters
 error_handler() {
     local line_no=$1
     echo ""
@@ -40,59 +37,7 @@ error_handler() {
     exit 1
 }
 
-# Set up error trap
 trap 'error_handler ${LINENO}' ERR
-
-# Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Determine if we need to clone the repository
-# Check for .git directory - more robust than checking for scripts directory
-if [ ! -d "${SCRIPT_DIR}/.git" ] || [ ! -d "${SCRIPT_DIR}/scripts" ]; then
-    echo -e "${YELLOW}Repository not found locally. Cloning from GitHub...${NC}"
-    echo ""
-    
-    # Verify git is available
-    if ! command -v git &> /dev/null; then
-        echo -e "${RED}✗ Git is not installed${NC}"
-        echo -e "${YELLOW}On macOS, you can install git using:${NC}"
-        echo "  xcode-select --install"
-        echo ""
-        echo "After installing git, run this script again."
-        exit 1
-    fi
-    
-    # Clone into ~/kamaete
-    CLONE_DIR="${HOME}/kamaete"
-    
-    # Check if directory already exists
-    if [ -d "${CLONE_DIR}" ]; then
-        echo -e "${YELLOW}Found existing kamaete directory at ${CLONE_DIR}${NC}"
-        echo -e "${YELLOW}Updating repository...${NC}"
-        cd "${CLONE_DIR}"
-        
-        # Try to update, fail if it doesn't work
-        if ! git pull origin main; then
-            echo ""
-            echo -e "${RED}✗ Failed to update repository${NC}"
-            echo -e "${YELLOW}Please manually update and try again:${NC}"
-            echo "  cd ${CLONE_DIR}"
-            echo "  git pull origin main"
-            exit 1
-        fi
-        
-        echo -e "${GREEN}✓ Repository updated successfully${NC}"
-    else
-        echo -e "${GREEN}Cloning kamaete to ${CLONE_DIR}...${NC}"
-        git clone https://github.com/angelocordon/kamaete.git "${CLONE_DIR}"
-        echo -e "${GREEN}✓ Repository cloned successfully${NC}"
-    fi
-    
-    REPO_ROOT="${CLONE_DIR}"
-    cd "${REPO_ROOT}"
-else
-    REPO_ROOT="${SCRIPT_DIR}"
-fi
 
 # Print welcome banner
 echo ""
@@ -100,23 +45,89 @@ echo -e "${BLUE}${BOLD}========================================${NC}"
 echo -e "${BLUE}${BOLD}   Kamaete (構えて) - Get Ready!${NC}"
 echo -e "${BLUE}${BOLD}========================================${NC}"
 echo ""
-echo -e "${GREEN}This script will set up your macOS development environment${NC}"
-echo -e "${GREEN}All operations are idempotent and safe to run multiple times${NC}"
+echo -e "${GREEN}Automated macOS development environment setup${NC}"
 echo ""
+
+# Step 1: Ensure ~/Development directory exists for organized project storage
+DEV_DIR="${HOME}/Development"
+if [ ! -d "${DEV_DIR}" ]; then
+    echo -e "${YELLOW}Creating ~/Development directory for project organization...${NC}"
+    mkdir -p "${DEV_DIR}"
+    echo -e "${GREEN}✓ Created ${DEV_DIR}${NC}"
+else
+    echo -e "${GREEN}✓ ${DEV_DIR} already exists${NC}"
+fi
+cd "${DEV_DIR}"
+echo ""
+
+# Step 2: Install Xcode Command Line Tools (required for git and other dev tools)
+echo -e "${BLUE}${BOLD}Checking Xcode Command Line Tools...${NC}"
+if ! xcode-select -p &> /dev/null; then
+    echo -e "${YELLOW}Xcode Command Line Tools not found. Installing...${NC}"
+    echo -e "${YELLOW}Note: This will open a dialog. Please follow the prompts to install.${NC}"
+    xcode-select --install
+    
+    # Wait for installation to complete
+    echo -e "${YELLOW}Waiting for Xcode Command Line Tools installation to complete...${NC}"
+    until xcode-select -p &> /dev/null; do
+        sleep 5
+    done
+    echo -e "${GREEN}✓ Xcode Command Line Tools installed${NC}"
+else
+    echo -e "${GREEN}✓ Xcode Command Line Tools already installed${NC}"
+fi
+echo ""
+
+# Step 3: Install Homebrew (package manager needed for all other tools)
+echo -e "${BLUE}${BOLD}Checking Homebrew...${NC}"
+if ! command -v brew &> /dev/null; then
+    echo -e "${YELLOW}Homebrew not found. Installing...${NC}"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    # Add Homebrew to PATH for current session (location differs on Intel vs Apple Silicon)
+    if [[ -f "/opt/homebrew/bin/brew" ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [[ -f "/usr/local/bin/brew" ]]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+    echo -e "${GREEN}✓ Homebrew installed${NC}"
+else
+    echo -e "${GREEN}✓ Homebrew already installed${NC}"
+fi
+echo ""
+
+# Step 4: Ensure git is available (needed to clone the kamaete repository)
+echo -e "${BLUE}${BOLD}Checking git...${NC}"
+if ! command -v git &> /dev/null; then
+    echo -e "${YELLOW}Git not found. Installing via Homebrew...${NC}"
+    brew install git
+    echo -e "${GREEN}✓ Git installed${NC}"
+else
+    echo -e "${GREEN}✓ Git already installed${NC}"
+fi
+echo ""
+
+# Step 5: Clone or update kamaete repository in ~/Development
+KAMAETE_DIR="${DEV_DIR}/kamaete"
+echo -e "${BLUE}${BOLD}Checking kamaete repository...${NC}"
+if [ -d "${KAMAETE_DIR}" ]; then
+    echo -e "${YELLOW}Found existing kamaete directory. Updating...${NC}"
+    cd "${KAMAETE_DIR}"
+    git pull origin main
+    echo -e "${GREEN}✓ Repository updated${NC}"
+else
+    echo -e "${YELLOW}Cloning kamaete repository...${NC}"
+    git clone https://github.com/angelocordon/kamaete.git "${KAMAETE_DIR}"
+    cd "${KAMAETE_DIR}"
+    echo -e "${GREEN}✓ Repository cloned${NC}"
+fi
+echo ""
+
+REPO_ROOT="${KAMAETE_DIR}"
 echo -e "${YELLOW}Repository location:${NC} ${REPO_ROOT}"
 echo ""
 
-# Verify we're on macOS
-if [[ "$(uname)" != "Darwin" ]]; then
-    echo -e "${RED}✗ This script is designed for macOS only${NC}"
-    echo -e "${YELLOW}Detected OS: $(uname)${NC}"
-    exit 1
-fi
-
-echo -e "${GREEN}✓ Running on macOS${NC}"
-echo ""
-
-# Function to run a setup script with nice output
+# Helper function to run setup scripts with clear progress feedback
 run_setup_script() {
     local script_path="$1"
     local script_name=$(basename "$script_path")
@@ -134,16 +145,10 @@ run_setup_script() {
     echo ""
 }
 
-# Step 1: Application Setup (includes Homebrew installation)
+# Step 6: Run all setup scripts in sequence
 run_setup_script "${REPO_ROOT}/scripts/setup_apps.sh"
-
-# Step 2: Dotfiles Setup
-run_setup_script "${REPO_ROOT}/scripts/setup-dotfiles.sh"
-
-# Step 3: Git Configuration
+run_setup_script "${REPO_ROOT}/scripts/setup_dotfiles.sh"
 run_setup_script "${REPO_ROOT}/scripts/setup_git.sh"
-
-# Step 4: Directory Structure
 run_setup_script "${REPO_ROOT}/scripts/setup_dirs.sh"
 
 # Success banner
@@ -154,10 +159,25 @@ echo -e "${GREEN}${BOLD}========================================${NC}"
 echo ""
 echo -e "${GREEN}Your macOS development environment is now ready!${NC}"
 echo ""
+
+# Reload shell configuration to apply changes immediately
+ZSHRC_PATH="${HOME}/.zshrc"
+if [ -f "${ZSHRC_PATH}" ]; then
+    echo -e "${YELLOW}Reloading shell configuration...${NC}"
+    # Source the zshrc to apply changes in current shell if possible
+    # Note: This works when running locally, but not when piped from curl
+    if [ -t 0 ]; then
+        source "${ZSHRC_PATH}" || true
+        echo -e "${GREEN}✓ Shell configuration reloaded${NC}"
+    else
+        echo -e "${YELLOW}Note: Please restart your terminal or run: source ${ZSHRC_PATH}${NC}"
+    fi
+fi
+
+echo ""
 echo -e "${YELLOW}Next steps:${NC}"
-echo "  1. Restart your terminal to load new configurations"
-echo "  2. Review installed applications in Applications folder"
-echo "  3. Customize dotfiles in: ${REPO_ROOT}/dotfiles/"
+echo "  1. Review installed applications in Applications folder"
+echo "  2. Customize dotfiles in: ${REPO_ROOT}/dotfiles/"
 echo ""
 echo -e "${BLUE}Happy coding! 🚀${NC}"
 echo ""
