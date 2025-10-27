@@ -84,12 +84,8 @@ if ! command -v brew &> /dev/null; then
     echo -e "${YELLOW}Homebrew not found. Installing...${NC}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     
-    # Add Homebrew to PATH for current session (location differs on Intel vs Apple Silicon)
-    if [[ -f "/opt/homebrew/bin/brew" ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-    elif [[ -f "/usr/local/bin/brew" ]]; then
-        eval "$(/usr/local/bin/brew shellenv)"
-    fi
+    # Add Homebrew to PATH for current session (Apple Silicon)
+    eval "$(/opt/homebrew/bin/brew shellenv)"
     echo -e "${GREEN}✓ Homebrew installed${NC}"
 else
     echo -e "${GREEN}✓ Homebrew already installed${NC}"
@@ -102,6 +98,12 @@ if ! command -v git &> /dev/null; then
     echo -e "${YELLOW}Git not found. Installing via Homebrew...${NC}"
     brew install git
     echo -e "${GREEN}✓ Git installed${NC}"
+    
+    # Configure git with basic settings (required for cloning operations)
+    echo -e "${YELLOW}Configuring git...${NC}"
+    git config --global user.name "Angelo Cordon"
+    git config --global user.email "angelocordon@gmail.com"
+    echo -e "${GREEN}✓ Git configured${NC}"
 else
     echo -e "${GREEN}✓ Git already installed${NC}"
 fi
