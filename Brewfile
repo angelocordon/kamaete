@@ -17,7 +17,7 @@ brew "gh"
 cask "ghostty" # TODO: Move as a setup script 
 cask "visual-studio-code" # TODO: Move as a setup script
 
-cask "amphetamine"
+# cask "amphetamine" TODO: cask not found
 cask "rectangle"
 cask "raycast"
 cask "bartender"
