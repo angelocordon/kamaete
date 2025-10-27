@@ -31,9 +31,10 @@ curl -sSL https://raw.githubusercontent.com/angelocordon/kamaete/main/install.sh
 1. Creates `~/Development` directory
 2. Installs Xcode Command Line Tools (includes git)
 3. Clones the Kamaete repository to `~/Development/kamaete`
-4. Executes `setup_main.sh` from the cloned repo to complete setup
+4. Executes `setup_homebrew.sh` from the cloned repo (with TTY access)
+5. Runs all setup scripts to configure your environment
 
-This approach **solves the non-interactive TTY issue** with Homebrew installation. By cloning the repository first and then executing a local script, Homebrew gets proper TTY access for sudo prompts, even when the bootstrap script is run via `curl | bash`.
+This approach **solves the non-interactive TTY issue** with Homebrew installation. By cloning the repository first and then executing `setup_homebrew.sh` as a local script, Homebrew gets proper TTY access for sudo prompts, even when the bootstrap script is run via `curl | bash`.
 
 > **Security Note:** For security-conscious users, we recommend the manual installation method below to review the code first.
 
@@ -44,10 +45,8 @@ If you prefer to review the code before running (recommended for first-time use)
 ```bash
 git clone https://github.com/angelocordon/kamaete.git
 cd kamaete
-./scripts/setup_main.sh
+./install.sh
 ```
-
-**Note:** When running manually, you can skip `install.sh` entirely and go straight to `setup_main.sh` if you've already cloned the repository.
 
 The installation is idempotent, so you can run it multiple times safely. Each run will:
 - Install or update applications via Homebrew
@@ -61,21 +60,13 @@ The installation is idempotent, so you can run it multiple times safely. Each ru
 
 ```
 ┌─────────────────────────────────────────────────┐
-│      install.sh (Bootstrap Entry Point)         │
+│      install.sh (Main Entry Point)              │
 │                                                 │
 │  1. Create ~/Development directory              │
 │  2. Install Xcode Command Line Tools (git)      │
 │  3. Clone kamaete repository                    │
-│  4. Execute setup_main.sh from cloned repo      │
-└────────────────────┬────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────┐
-│         setup_main.sh (Main Setup)              │
-│                                                 │
-│  Executed from cloned repo with proper TTY     │
-│  - Install Homebrew (interactive prompts work) │
-│  - Run all setup scripts                       │
+│  4. Execute setup_homebrew.sh (local, has TTY) │
+│  5. Run all setup scripts                       │
 └────────────────────┬────────────────────────────┘
                      │
         ┌────────────┴────────────┐
@@ -102,21 +93,24 @@ The installation is idempotent, so you can run it multiple times safely. Each ru
 
 ### Component Interaction
 
-1. **install.sh**: Bootstrap script that handles initial setup (Xcode CLT, git, repo cloning)
-2. **setup_main.sh**: Main setup script executed from cloned repo (Homebrew + all setup scripts)
+1. **install.sh**: Main orchestration script that coordinates all setup operations
+2. **setup_homebrew.sh**: Dedicated Homebrew installation script (executed locally with TTY)
 3. **Application Management**: Installs developer tools and productivity apps via Homebrew
 4. **Dotfiles Management**: Version-controls and symlinks configuration files
 5. **Directory Structure**: Ensures standard development folders exist
 
 ### Why This Architecture?
 
-The two-phase bootstrap approach (install.sh → setup_main.sh) solves a critical issue: **Homebrew installation fails in non-interactive mode when stdin is not a TTY**. This commonly occurs when running scripts via `curl | bash`.
+**The Problem:** Homebrew installation fails in non-interactive mode when stdin is not a TTY. This commonly occurs when running scripts via `curl | bash`.
+
+**The Solution:** Clone the repository first, then execute `setup_homebrew.sh` as a local script.
 
 **How it works:**
 - When you run `curl ... | bash`, stdin is consumed by the piped curl output
 - Homebrew's installation requires sudo access and needs TTY for interactive prompts
-- By cloning the repository first, then executing `setup_main.sh` as a local script, Homebrew gets proper TTY access
+- By cloning the repository first, then executing `setup_homebrew.sh` as a local script, Homebrew gets proper TTY access
 - This allows interactive prompts to work correctly, even though the initial bootstrap was piped
+- After Homebrew is installed, `install.sh` continues to run all other setup scripts
 
 ## 📦 Included Scripts and Dotfiles
 
@@ -124,8 +118,8 @@ The two-phase bootstrap approach (install.sh → setup_main.sh) solves a critica
 
 | Script | Purpose |
 |--------|---------|
-| `install.sh` | Bootstrap script for initial setup (Xcode CLT, git, clone repo) |
-| `scripts/setup_main.sh` | Main setup script (Homebrew installation + orchestrates all setup scripts) |
+| `install.sh` | Main orchestration script (Xcode CLT, git, clone repo, Homebrew, all setup scripts) |
+| `scripts/setup_homebrew.sh` | Dedicated Homebrew installation script (executed locally with TTY access) |
 | `scripts/setup_apps.sh` | Installs applications using Homebrew and Brewfile |
 | `scripts/setup_dotfiles.sh` | Creates symlinks for dotfiles with backup mechanism |
 | `scripts/setup_git.sh` | Configures git with user details and default branch (main) |
