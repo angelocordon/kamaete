@@ -125,6 +125,11 @@ echo -e "${YELLOW}Running setup_homebrew.sh with proper TTY access...${NC}"
 echo ""
 
 SETUP_HOMEBREW="${REPO_ROOT}/scripts/setup_homebrew.sh"
+# The selected line attempts to execute the setup_homebrew.sh 
+# script using bash. If this script fails (i.e., returns a non-
+# zero exit code), the script will handle the error in the 
+# following lines. This ensures Homebrew installation only 
+# continues if setup_homebrew.sh completes successfully.
 if [ ! -f "${SETUP_HOMEBREW}" ]; then
     echo -e "${RED}✗ setup_homebrew.sh not found at ${SETUP_HOMEBREW}${NC}"
     echo -e "${YELLOW}Your repository may be out of date. Try: cd ${REPO_ROOT} && git pull${NC}"
