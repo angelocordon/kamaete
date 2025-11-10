@@ -1,25 +1,63 @@
 # Kamaete - Zsh Aliases
 # This file is managed by Kamaete dotfiles system
 
-# General Aliases
-alias ll='ls -lah'
-alias la='ls -A'
-alias l='ls -CF'
-alias ..='cd ..'
-alias ...='cd ../..'
+alias rs="exec zsh" # Reload shell
+alias dev="cd ~/Development"
+
+if type nvim > /dev/null 2>&1; then
+  alias vi='nvim'
+fi
+
+alias zshconfig="vi ~/.zshrc"
+alias zaconfig="vi ~/.zsh_aliases"
+alias viconfig="vi ~/.vimrc"
 
 # Git Aliases
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git log --oneline --graph --decorate'
+alias gst='git status'
+
+alias gl="git log"
 alias gd='git diff'
 
-# Vim/Neovim Aliases
-alias vim='nvim'
-alias vi='nvim'
+alias gm='git checkout $(git_main_branch)'
+
+alias grm='git pull --rebase origin $(git_main_branch)'
+alias gv='git pull origin $(git_current_branch)'
+alias g^="git push -u origin HEAD"
+alias gff='git push -f'
+
+alias gap='git add --patch'
+
+alias gcm="git commit -m"
+alias gcw="git commit -m 'WIP $1'"
+alias gca="git commit --amend"
+alias gacn="git commit -v -a --no-edit --amend"
+
+alias gri="git rebase --autostash -i"
+alias gcdf="git clean -df"
+
+# Prune branches
+function gbp() {
+  local -a branches=("$(git_main_branch)" "$(git_current_branch)" "$@")
+  local exclude_patterns=$(IFS='|'; echo "${branches[*]}")
+
+  git branch | grep -vE "$exclude_patterns" | xargs git branch -D
+}
 
 # Development Aliases
+
+# Docker
 alias dc='docker-compose'
 alias dps='docker ps'
+
+# Example: `nuke node_modules`, which would recursively 
+# destroy the node_modules in a given directory.
+function nuke() {
+   if [ -z "$1" ]; then
+    echo "Please pass in a directory name within the current directory."
+    return 1
+  fi
+
+  find . -name "$1" -type d -prune -print -exec rm -rf '{}' \;
+}
+
+alias pf="pnpm -F"
