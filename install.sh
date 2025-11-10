@@ -101,10 +101,18 @@ echo ""
 KAMAETE_DIR="${DEV_DIR}/kamaete"
 echo -e "${BLUE}${BOLD}Checking kamaete repository...${NC}"
 if [ -d "${KAMAETE_DIR}" ]; then
-    echo -e "${YELLOW}Found existing kamaete directory. Updating...${NC}"
-    cd "${KAMAETE_DIR}"
-    git pull origin main
-    echo -e "${GREEN}✓ Repository updated${NC}"
+    echo -e "${YELLOW}Found existing kamaete directory.${NC}"
+    read -p "Update repository from GitHub? (y/n): " -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo -e "${YELLOW}Updating repository...${NC}"
+        cd "${KAMAETE_DIR}"
+        git pull origin main
+        echo -e "${GREEN}✓ Repository updated${NC}"
+    else
+        echo -e "${YELLOW}Skipping repository update${NC}"
+        cd "${KAMAETE_DIR}"
+    fi
 else
     echo -e "${YELLOW}Cloning kamaete repository...${NC}"
     git clone https://github.com/angelocordon/kamaete.git "${KAMAETE_DIR}"
@@ -169,6 +177,7 @@ run_setup_script "${REPO_ROOT}/scripts/setup_apps.sh"
 run_setup_script "${REPO_ROOT}/scripts/setup_dotfiles.sh"
 run_setup_script "${REPO_ROOT}/scripts/setup_git.sh"
 run_setup_script "${REPO_ROOT}/scripts/setup_dirs.sh"
+run_setup_script "${REPO_ROOT}/scripts/setup-vscode.sh"
 
 # Success banner
 echo ""
@@ -200,4 +209,3 @@ echo "  2. Customize dotfiles in: ${REPO_ROOT}/dotfiles/"
 echo ""
 echo -e "${BLUE}Happy coding! 🚀${NC}"
 echo ""
-
