@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# setup_dirs.sh - Ensure standard development directories exist
+# setup-dirs.sh - Ensure standard development directories exist
 #
 # This script creates the necessary directory structure for development work.
 # It is idempotent and safe to run multiple times.
@@ -11,7 +11,7 @@
 # - Provides clear feedback on actions taken
 #
 # Usage:
-#   ./scripts/setup_dirs.sh
+#   ./scripts/setup-dirs.sh
 
 set -e  # Exit on error
 

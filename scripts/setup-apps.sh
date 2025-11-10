@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# setup_apps.sh - Install essential applications via Homebrew and Brewfile
+# setup-apps.sh - Install essential applications via Homebrew and Brewfile
 #
 # This script ensures Homebrew is installed and then runs brew bundle
 # to install all applications defined in the Brewfile.
@@ -11,7 +11,7 @@
 # - Uses Brewfile for declarative package management
 #
 # Usage:
-#   ./scripts/setup_apps.sh
+#   ./scripts/setup-apps.sh
 
 set -e  # Exit on error
 
