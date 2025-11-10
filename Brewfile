@@ -9,8 +9,10 @@
 tap "homebrew/bundle"
 
 # CLI Tools
-brew "git"
+brew "bat"
+brew "fzf"
 brew "gh"
+brew "git-delta"
 
 # GUI Applications (Casks)
 
