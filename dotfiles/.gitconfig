@@ -2,66 +2,17 @@
 # This file is managed by Kamaete dotfiles system
 
 [user]
-	# Note: Update these with your personal information
 	name = Angelo Cordon
 	email = angelocordon@gmail.com
 
 [core]
-	editor = nvim
-	autocrlf = input
-	excludesfile = ~/.gitignore_global
+	pager = delta
+
+[delta]
+	side-by-side = true
 
 [init]
 	defaultBranch = main
 
-[pull]
-	rebase = false
-
-[push]
-	default = simple
-	autoSetupRemote = true
-
-[merge]
-	conflictstyle = diff3
-
-[diff]
-	colorMoved = zebra
-
-[color]
-	ui = auto
-
-[alias]
-	# Short status
-	s = status -s
-	
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
-	
-	# Pretty log output
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-	
-	# Amend the currently staged files to the latest commit
-	amend = commit --amend --reuse-message=HEAD
-	
-	# Interactive rebase
-	reb = rebase -i
-	
-	# Show the diff between the latest commit and the current state
-	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-	
-	# Pull in remote changes for the current repository and all its submodules
-	p = !"git pull; git submodule foreach git pull origin main"
-	
-	# Undo last commit but keep changes
-	undo = reset HEAD~1 --mixed
-	
-	# List contributors with number of commits
-	contributors = shortlog --summary --numbered
-
-[help]
-	autocorrect = 1
-
-[fetch]
-	prune = true
+[url "git@github.com:"]
+	insteadOf = https://github.com
