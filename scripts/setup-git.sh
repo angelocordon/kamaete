@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# setup_git.sh - Configure git with user details and default branch
+# setup-git.sh - Configure git with user details and default branch
 #
 # This script configures git with the following settings:
 # - user.name: Angelo Cordon
@@ -13,7 +13,7 @@
 # - Uses global git configuration
 #
 # Usage:
-#   ./scripts/setup_git.sh
+#   ./scripts/setup-git.sh
 
 set -e  # Exit on error
 
@@ -29,7 +29,7 @@ echo ""
 # Check if git is installed
 if ! command -v git &> /dev/null; then
     echo -e "${RED}✗ Git is not installed${NC}"
-    echo -e "${YELLOW}Please install git first (it should be installed via setup_apps.sh)${NC}"
+    echo -e "${YELLOW}Please install git first (it should be installed via setup-apps.sh)${NC}"
     exit 1
 fi
 

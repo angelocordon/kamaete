@@ -10,7 +10,7 @@
 #
 # To solve the non-interactive TTY issue with Homebrew installation when running
 # via curl | bash, this script clones the repository first, then executes
-# setup_homebrew.sh as a local script (which has proper TTY access).
+# setup-homebrew.sh as a local script (which has proper TTY access).
 #
 # Usage:
 #   curl -sSL https://raw.githubusercontent.com/angelocordon/kamaete/main/install.sh | bash
@@ -125,21 +125,21 @@ REPO_ROOT="${KAMAETE_DIR}"
 echo -e "${YELLOW}Repository location:${NC} ${REPO_ROOT}"
 echo ""
 
-# Step 5: Install Homebrew by executing setup_homebrew.sh from the cloned repository
+# Step 5: Install Homebrew by executing setup-homebrew.sh from the cloned repository
 # Running it from the cloned repo ensures proper TTY access for interactive sudo prompts
 # This solves the non-interactive mode issue when install.sh is run via curl | bash
 echo -e "${BLUE}${BOLD}Installing Homebrew from cloned repository...${NC}"
-echo -e "${YELLOW}Running setup_homebrew.sh with proper TTY access...${NC}"
+echo -e "${YELLOW}Running setup-homebrew.sh with proper TTY access...${NC}"
 echo ""
 
-SETUP_HOMEBREW="${REPO_ROOT}/scripts/setup_homebrew.sh"
-# The selected line attempts to execute the setup_homebrew.sh 
+SETUP_HOMEBREW="${REPO_ROOT}/scripts/setup-homebrew.sh"
+# The selected line attempts to execute the setup-homebrew.sh 
 # script using bash. If this script fails (i.e., returns a non-
 # zero exit code), the script will handle the error in the 
 # following lines. This ensures Homebrew installation only 
-# continues if setup_homebrew.sh completes successfully.
+# continues if setup-homebrew.sh completes successfully.
 if [ ! -f "${SETUP_HOMEBREW}" ]; then
-    echo -e "${RED}✗ setup_homebrew.sh not found at ${SETUP_HOMEBREW}${NC}"
+    echo -e "${RED}✗ setup-homebrew.sh not found at ${SETUP_HOMEBREW}${NC}"
     echo -e "${YELLOW}Your repository may be out of date. Try: cd ${REPO_ROOT} && git pull${NC}"
     exit 1
 fi
@@ -149,7 +149,7 @@ if ! bash "${SETUP_HOMEBREW}"; then
     echo -e "${RED}✗ Homebrew installation failed${NC}"
     echo -e "${YELLOW}You can try running the setup manually:${NC}"
     echo "  cd ${REPO_ROOT}"
-    echo "  ./scripts/setup_homebrew.sh"
+    echo "  ./scripts/setup-homebrew.sh"
     echo ""
     exit 1
 fi
@@ -173,10 +173,10 @@ run_setup_script() {
 }
 
 # Step 6: Run all setup scripts in sequence
-run_setup_script "${REPO_ROOT}/scripts/setup_apps.sh"
-run_setup_script "${REPO_ROOT}/scripts/setup_dotfiles.sh"
-run_setup_script "${REPO_ROOT}/scripts/setup_git.sh"
-run_setup_script "${REPO_ROOT}/scripts/setup_dirs.sh"
+run_setup_script "${REPO_ROOT}/scripts/setup-apps.sh"
+run_setup_script "${REPO_ROOT}/scripts/setup-dotfiles.sh"
+run_setup_script "${REPO_ROOT}/scripts/setup-git.sh"
+run_setup_script "${REPO_ROOT}/scripts/setup-dirs.sh"
 run_setup_script "${REPO_ROOT}/scripts/setup-vscode.sh"
 
 # Success banner

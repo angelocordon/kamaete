@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #
-# setup_homebrew.sh - Install Homebrew package manager
+# setup-homebrew.sh - Install Homebrew package manager
 #
 # This script is called by install.sh after the repository has been cloned.
 # Running from the cloned repo ensures proper TTY access for interactive sudo prompts.
 # This solves the non-interactive mode issue when install.sh is run via curl | bash.
 #
 # Usage:
-#   ./scripts/setup_homebrew.sh
+#   ./scripts/setup-homebrew.sh
 
 set -euo pipefail
 
@@ -23,7 +23,7 @@ NC='\033[0m' # No Color
 error_handler() {
     local line_no=$1
     echo ""
-    echo -e "${RED}${BOLD}✗ Error occurred in setup_homebrew.sh at line ${line_no}${NC}"
+    echo -e "${RED}${BOLD}✗ Error occurred in setup-homebrew.sh at line ${line_no}${NC}"
     echo -e "${RED}Homebrew installation failed. Please check the error message above.${NC}"
     echo ""
     exit 1
