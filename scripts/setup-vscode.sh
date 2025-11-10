@@ -43,9 +43,17 @@ fi
 
 # Backup existing settings file if it exists
 if [ -e "$VSCODE_SETTINGS" ]; then
-    backup_path="$VSCODE_SETTINGS.backup-$(date +%Y%m%d_%H%M%S)"
-    mv "$VSCODE_SETTINGS" "$backup_path"
-    echo "✓ Backed up existing settings to: $backup_path"
+    echo "⚠ Existing VSCode settings found at: $VSCODE_SETTINGS"
+    read -p "Would you like to create a backup? (y/n): " -n 1 -r
+    echo
+    
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        backup_path="$VSCODE_SETTINGS.backup-$(date +%Y%m%d_%H%M%S)"
+        mv "$VSCODE_SETTINGS" "$backup_path"
+        echo "✓ Backed up existing settings to: $backup_path"
+    else
+        echo "Skipping backup..."
+    fi
 fi
 
 # Copy settings file
