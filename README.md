@@ -124,6 +124,7 @@ The installation is idempotent, so you can run it multiple times safely. Each ru
 | `scripts/setup_dotfiles.sh` | Creates symlinks for dotfiles with backup mechanism |
 | `scripts/setup_git.sh` | Configures git with user details and default branch (main) |
 | `scripts/setup_dirs.sh` | Creates standard development directory structure (~/Development) |
+| `scripts/setup-vscode.sh` | Installs and configures VSCode |
 
 ### Dotfiles
 
@@ -132,6 +133,7 @@ The installation is idempotent, so you can run it multiple times safely. Each ru
 | `.zshrc` | Zsh shell configuration with aliases and environment settings |
 | `.gitconfig` | Git configuration with user settings and aliases |
 | `nvimrc` | Neovim/Vim editor configuration |
+| `vscode-user-settings.json` | Visual Studio Code user settings |
 
 ### Applications Included
 

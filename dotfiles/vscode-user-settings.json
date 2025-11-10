@@ -1,0 +1,93 @@
+{
+	// EDITOR SETTINGS
+	"editor.minimap.enabled": false,
+	"editor.fontFamily": "'MesloLGS NF', Menlo, Monaco, 'Courier New', monospace",
+	"editor.fontSize": 13,
+	"editor.lineHeight": 2,
+	"editor.tabSize": 2,
+	"editor.rulers": [80, 120],
+	"editor.guides.bracketPairs": true,
+	"editor.linkedEditing": true,
+	"editor.stickyScroll.enabled": false,
+	"editor.unicodeHighlight.invisibleCharacters": false,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "modifications",
+
+	// TERMINAL SETTINGS
+	"terminal.integrated.fontSize": 13,
+	"terminal.integrated.lineHeight": 1.4,
+
+	// Editor Navigation & Go-to Behavior
+	"editor.gotoLocation.multipleDeclarations": "goto",
+	"editor.gotoLocation.multipleDefinitions": "goto",
+	"editor.gotoLocation.multipleImplementations": "goto",
+	"editor.gotoLocation.multipleReferences": "goto",
+	"editor.gotoLocation.multipleTypeDefinitions": "goto",
+
+	// WORKBENCH & UI SETTINGS
+	"workbench.activityBar.location": "hidden",
+	"workbench.colorTheme": "Snazzy",
+	"workbench.tree.enableStickyScroll": false,
+	"workbench.secondarySideBar.defaultVisibility": "hidden",
+
+	// BREADCRUMBS SETTINGS
+	"breadcrumbs.icons": false,
+	"breadcrumbs.symbolPath": "off",
+	"breadcrumbs.showArrays": false,
+	"breadcrumbs.showBooleans": false,
+	"breadcrumbs.showClasses": false,
+	"breadcrumbs.showConstants": false,
+	"breadcrumbs.showConstructors": false,
+	"breadcrumbs.showEnumMembers": false,
+	"breadcrumbs.showEnums": false,
+	"breadcrumbs.showEvents": false,
+	"breadcrumbs.showFields": false,
+	"breadcrumbs.showFiles": false,
+	"breadcrumbs.showFunctions": false,
+	"breadcrumbs.showInterfaces": false,
+	"breadcrumbs.showKeys": false,
+	"breadcrumbs.showMethods": false,
+	"breadcrumbs.showModules": false,
+	"breadcrumbs.showNamespaces": false,
+	"breadcrumbs.showNull": false,
+	"breadcrumbs.showNumbers": false,
+	"breadcrumbs.showObjects": false,
+	"breadcrumbs.showOperators": false,
+	"breadcrumbs.showPackages": false,
+	"breadcrumbs.showProperties": false,
+	"breadcrumbs.showStrings": false,
+	"breadcrumbs.showStructs": false,
+	"breadcrumbs.showTypeParameters": false,
+	"breadcrumbs.showVariables": false,
+
+	// EXPLORER & FILES
+	"explorer.compactFolders": false,
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+
+	// PROBLEMS & DIAGNOSTICS
+	"problems.showCurrentInStatus": true,
+
+	// LANGUAGE-SPECIFIC SETTINGS
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"javascript.updateImportsOnFileMove.enabled": "always",
+
+	// FORMATTER SETTINGS (Prettier)
+	"prettier.singleQuote": true,
+	"prettier.useTabs": true,
+
+	// EXTENSION-SPECIFIC SETTINGS
+	// VIM SETTINGS
+	"vim.foldfix": true,
+	"vim.smartRelativeLine": true,
+
+	// GitHub Copilot
+	"github.copilot.enable": {
+		"*": true,
+		"plaintext": false,
+		"markdown": false,
+		"scminput": false
+	},
+	"github.copilot.nextEditSuggestions.enabled": true
+}
