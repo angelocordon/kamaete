@@ -6,8 +6,6 @@
 #   brew bundle          # Install everything in this file
 #   brew bundle cleanup  # Remove packages not listed in this file
 
-tap "homebrew/bundle"
-
 # CLI Tools
 brew "bat"
 brew "fzf"
